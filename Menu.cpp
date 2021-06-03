@@ -15,7 +15,7 @@ static int MenuNumber = 0;  //メニューカーソル管理用変数
 void Menu_Initialize() {	
 	mImageTitle = LoadGraph("images/Tetris_title.png");     //画像のロード
 	mImageCone = LoadGraph("images/cone.png");
-    mImageMenu = LoadGraph("images/menu.png");
+    mImageMenu = LoadGraph("images/menu_r.png");
 }
 
 // 終了処理
@@ -29,10 +29,10 @@ void Menu_Finalize() {
 void Menu_Update() {
     //メニューカーソル移動処理
     if (iKeyFlg & PAD_INPUT_DOWN) {
-        if (++MenuNumber > 2) MenuNumber = 0;
+        if (++MenuNumber > 3) MenuNumber = 0;
     }
     if (iKeyFlg & PAD_INPUT_UP) {
-        if (--MenuNumber < 0) MenuNumber = 2;
+        if (--MenuNumber < 0) MenuNumber = 3;
     }
 
     if (iKeyFlg == PAD_INPUT_1) { //Zキーが押されていたら
@@ -57,9 +57,9 @@ void Menu_Draw() {
 	DrawGraph(0, 0, mImageTitle, FALSE );
 
     // メニュー
-    DrawGraph(228, 260, mImageMenu, TRUE);
+    DrawGraph(280, 340, mImageMenu, TRUE);
 
     // メニューカーソル
-    DrawRotaGraph(180, 275 + MenuNumber * 40, 0.7f, PI / 2, mImageCone, TRUE);
+    DrawRotaGraph(245, 360 + MenuNumber * 40, 0.7f, PI / 2, mImageCone, TRUE);
 
 }
