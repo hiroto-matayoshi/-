@@ -11,11 +11,20 @@ static int mImageMenu;
 
 static int MenuNumber = 0;  //メニューカーソル管理用変数
 
+static int mSoundsSelect;   //音ファイル格納用変数
+static int mSoundsMove;     
+
 // 初期化
 void Menu_Initialize() {	
 	mImageTitle = LoadGraph("images/Tetris_title.png");     //画像のロード
 	mImageCone = LoadGraph("images/cone.png");
     mImageMenu = LoadGraph("images/menu_r.png");
+
+    mSoundsSelect = LoadSoundMem("sounds/決定、ボタン押下8.mp3");    //決定音のロード
+    mSoundsMove = LoadSoundMem("sounds/カーソル移動11.mp3");    //移動音のロード
+
+    // ＢＧＭ再生
+    PlayMusic("sounds/yamiyouen.mp3", DX_PLAYTYPE_LOOP);
 }
 
 // 終了処理
@@ -23,33 +32,42 @@ void Menu_Finalize() {
 	DeleteGraph(mImageTitle);       // 画像の解放
 	DeleteGraph(mImageCone);
     DeleteGraph(mImageMenu);
+
+    StopSoundMem(mSoundsSelect);
+    StopSoundMem(mSoundsMove);
+
+    // ＢＧＭ停止
+    StopMusic();
 }
 
 //更新
 void Menu_Update() {
     //メニューカーソル移動処理
     if (iKeyFlg & PAD_INPUT_DOWN) {
+        PlaySoundMem(mSoundsMove, DX_PLAYTYPE_BACK);
         if (++MenuNumber > 3) MenuNumber = 0;
     }
     if (iKeyFlg & PAD_INPUT_UP) {
+        PlaySoundMem(mSoundsMove, DX_PLAYTYPE_BACK);
         if (--MenuNumber < 0) MenuNumber = 3;
     }
 
-    if (iKeyFlg == PAD_INPUT_1) { //Zキーが押されていたら
-        switch (MenuNumber) {       //シーンによって処理を分岐
-        case 0:    //現在の画面がメニューなら
-            SceneMgr_ChangeScene(eScene_Game); //シーンをゲーム画面に変更
+    if (iKeyFlg == PAD_INPUT_1) {	//
+        switch (MenuNumber) {		//
+        case 0:		//
+            SceneMgr_ChangeScene(eScene_Game);	//
             break;
         case 1:
-            SceneMgr_ChangeScene(eScene_Help); //シーンをゲーム画面に変更
+            SceneMgr_ChangeScene(eScene_Rank);	//
             break;
         case 2:
-            SceneMgr_ChangeScene(eScene_End); //シーンをゲーム画面に変更
+            SceneMgr_ChangeScene(eScene_Help);	//
             break;
-
+        case 3:
+            SceneMgr_ChangeScene(eScene_End);	//
+            break;
         }
     }
-
 }
 
 // 描画
