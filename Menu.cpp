@@ -17,7 +17,7 @@ static int mSoundsMove;
 // 初期化
 void Menu_Initialize() {	
 	mImageTitle = LoadGraph("images/Tetris_title.png");     //画像のロード
-	mImageCone = LoadGraph("images/cone.png");
+	mImageCone = LoadGraph("images/Tmino.png");
     mImageMenu = LoadGraph("images/menu_r.png");
 
     mSoundsSelect = LoadSoundMem("sounds/決定、ボタン押下8.mp3");    //決定音のロード
@@ -78,6 +78,6 @@ void Menu_Draw() {
     DrawGraph(280, 340, mImageMenu, TRUE);
 
     // メニューカーソル
-    DrawRotaGraph(245, 360 + MenuNumber * 40, 0.7f, PI / 2, mImageCone, TRUE);
+    DrawRotaGraph(245, 360 + MenuNumber * 40, 0.7f, 0, mImageCone, TRUE);
 
 }
